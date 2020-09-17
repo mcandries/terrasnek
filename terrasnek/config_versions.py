@@ -24,6 +24,10 @@ class TFCConfigVersions(TFCEndpoint):
     def list(self, workspace_id, page=None, page_size=None):
         """
         ``GET /workspaces/:workspace_id/configuration-versions``
+
+        Query parameters:
+            - ``since`` (Optional)
+            - ``page`` (Optional)
         """
         url = f"{self._ws_api_v2_base_url}/{workspace_id}/configuration-versions"
         return self._list(url, page=page, page_size=page_size)

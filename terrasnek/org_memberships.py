@@ -36,8 +36,20 @@ class TFCOrgMemberships(TFCEndpoint):
 
         This endpoint retrieves all the users in the active organization.
 
-        PARAMS:
-            https://www.terraform.io/docs/cloud/api/organization-memberships.html#query-parameters
+        Query parameters:
+            - ``query`` (Optional)
+            - ``filter[status]`` (Optional)
+            - ``page`` (Optional)
+            - ``page_size`` (Optional)
+
+        Example filter(s):
+        ``
+        filters = [
+            {
+                "keys": ["status"],
+                "value": "foo"
+            }
+        ]
         """
         return self._list(\
             self._org_base_url, query=query, filters=filters, page=page, page_size=page_size)

@@ -50,8 +50,8 @@ class TFCStateVersions(TFCEndpoint):
         Query parameters:
             - filter[workspace][name] (Required)
             - filter[organization][name] (Required)
-            - page[number] (Optional)
-            - page[size] (Optional)
+            - page (Optional)
+            - page_size (Optional)
 
         Example filter(s):
         ``

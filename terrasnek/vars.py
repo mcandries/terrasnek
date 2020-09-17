@@ -27,6 +27,10 @@ class TFCVars(TFCEndpoint):
     def list(self, workspace_name=None):
         """
         ``GET /vars``
+
+        # TODO: take the filters in the standard way here.
+        Query parameters:
+            - ``filter[workspace][name]`` (Required)
         """
         url = f"{self._endpoint_base_url}?filter[organization][name]={self._org_name}"
 

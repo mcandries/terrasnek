@@ -66,6 +66,11 @@ class TFCWorkspaces(TFCEndpoint):
         ``GET /organizations/:organization_name/workspaces``
 
         This endpoint lists workspaces in the organization.
+
+        Query parameters:
+            - page (Optional)
+            - page_size (Optional)
+        ``
         """
         return self._list(self._org_api_v2_base_url, page=page, page_size=page_size)
 
