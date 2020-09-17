@@ -27,11 +27,24 @@ class TFCTeamAccess(TFCEndpoint):
         """
         return self._post(self._endpoint_base_url, data=payload)
 
-    def list(self):
+    def list(self, filters):
         """
         ``GET /team-workspaces``
+
+        Query parameters:
+            - ``filter[workspace][id]`` (Required)
+
+        Example filter(s):
+        ``
+        filters = [
+            {
+                "keys": ["workspace", "id"],
+                "value": "foo"
+            }
+        ]
+        ``
         """
-        return self._list(self._endpoint_base_url)
+        return self._list(self._endpoint_base_url, filters=filters)
 
     def remove_team_access(self, access_id):
         """

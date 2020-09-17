@@ -46,6 +46,26 @@ class TFCStateVersions(TFCEndpoint):
 
         This endpoint supports pagination with standard URL query parameters; remember to
         percent-encode.
+
+        Query parameters:
+            - filter[workspace][name] (Required)
+            - filter[organization][name] (Required)
+            - page[number] (Optional)
+            - page[size] (Optional)
+
+        Example filter(s):
+        ``
+        filters = [
+            {
+                "keys": ["workspace", "name"],
+                "value": "foo"
+            },
+            {
+                "keys": ["organization", "name"],
+                "value": "bar"
+            }
+        ]
+        ``
         """
         url = f"{self._state_version_api_v2_base_url}"
         return self._list(url, filters=filters, page=page, page_size=page_size)
