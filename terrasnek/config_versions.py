@@ -25,12 +25,9 @@ class TFCConfigVersions(TFCEndpoint):
         """
         ``GET /workspaces/:workspace_id/configuration-versions``
 
-        Query parameters:
+        Query parameter(s) (`details <https://www.terraform.io/docs/cloud/api/configuration-versions.html#query-parameters>`_):
             - ``since`` (Optional)
             - ``page`` (Optional)
-
-        Query parameter details:
-            - https://www.terraform.io/docs/cloud/api/configuration-versions.html#query-parameters
         """
         url = f"{self._ws_api_v2_base_url}/{workspace_id}/configuration-versions"
         return self._list(url, page=page, page_size=page_size)

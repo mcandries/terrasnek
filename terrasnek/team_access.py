@@ -31,21 +31,19 @@ class TFCTeamAccess(TFCEndpoint):
         """
         ``GET /team-workspaces``
 
-        Query parameters:
+        Query parameter(s) (`details <https://www.terraform.io/docs/cloud/api/team-access.html#query-parameters>`_):
             - ``filter[workspace][id]`` (Required)
 
-        Query parameter details:
-            - https://www.terraform.io/docs/cloud/api/team-access.html#query-parameters
-
         Example filter(s):
-        ``
-        filters = [
-            {
-                "keys": ["workspace", "id"],
-                "value": "foo"
-            }
-        ]
-        ``
+
+        .. code-block:: python
+
+            filters = [
+                {
+                    "keys": ["workspace", "id"],
+                    "value": "foo"
+                }
+            ]
         """
         return self._list(self._endpoint_base_url, filters=filters)
 

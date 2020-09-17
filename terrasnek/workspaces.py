@@ -8,7 +8,7 @@ class TFCWorkspaces(TFCEndpoint):
     """
     Workspaces represent running infrastructure managed by Terraform.
 
-    https://www.terraform.io/docs/cloud/api/workspaces.html
+    `Workspaces API Spec <https://www.terraform.io/docs/cloud/api/workspaces.html>`_
     """
 
     def __init__(self, instance_url, org_name, headers, well_known_paths, verify, log_level):
@@ -67,13 +67,9 @@ class TFCWorkspaces(TFCEndpoint):
 
         This endpoint lists workspaces in the organization.
 
-        Query parameters:
-            - page (Optional)
-            - page_size (Optional)
-
-        Query parameter details:
-            - https://www.terraform.io/docs/cloud/api/workspaces.html#query-parameters
-        ``
+        Query parameter(s) (`details <https://www.terraform.io/docs/cloud/api/workspaces.html#query-parameters>`_):
+            - ``page`` (Optional)
+            - ``page_size`` (Optional)
         """
         return self._list(self._org_api_v2_base_url, page=page, page_size=page_size)
 

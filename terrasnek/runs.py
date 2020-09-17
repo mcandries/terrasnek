@@ -32,13 +32,9 @@ class TFCRuns(TFCEndpoint):
         """
         ``GET /workspaces/:workspace_id/runs``
 
-        Query parameters:
+        Query parameter(s) (`details <https://www.terraform.io/docs/cloud/api/run.html#query-parameters>`_):
             - ``page`` (Optional)
             - ``page_size`` (Optional)
-
-        Query parameter details:
-            - https://www.terraform.io/docs/cloud/api/run.html#query-parameters
-        ``
         """
         url = f"{self._ws_api_v2_base_url}/{workspace_id}/runs"
         return self._list(url, page=page, page_size=page_size)
