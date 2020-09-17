@@ -70,6 +70,9 @@ class TFCWorkspaces(TFCEndpoint):
         Query parameters:
             - page (Optional)
             - page_size (Optional)
+
+        Query parameter details:
+            - https://www.terraform.io/docs/cloud/api/workspaces.html#query-parameters
         ``
         """
         return self._list(self._org_api_v2_base_url, page=page, page_size=page_size)

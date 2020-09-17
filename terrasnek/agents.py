@@ -45,6 +45,9 @@ class TFCAgents(TFCEndpoint):
         Query parameters:
             - ``filter[last-ping-since]`` (Optional)
 
+        Query parameter details:
+            - https://www.terraform.io/docs/cloud/api/agents.html#query-parameters
+
         Example filter(s):
         ``
         filters = [

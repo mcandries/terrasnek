@@ -40,8 +40,25 @@ class TFCPolicySets(TFCEndpoint):
         """
         ``GET /organizations/:organization_name/policy-sets``
 
-        PARAMS:
-            https://www.terraform.io/docs/cloud/api/policy-sets.html#list-policy-sets
+        Query parameters:
+            - ``filter[versioned]`` (Optional)
+            - ``include`` (Optional)
+            - ``page`` (Optional)
+            - ``page_size`` (Optional)
+            - ``search`` (Optional)
+
+        Query parameter details:
+            - https://www.terraform.io/docs/cloud/api/policy-sets.html#query-parameters
+
+        Example filter(s):
+        ``
+        filters = [
+            {
+                "keys": ["versioned"],
+                "value": "foo"
+            }
+        ]
+        ``
         """
         return self._list(\
             self._org_api_v2_base_url, \

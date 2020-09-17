@@ -42,6 +42,9 @@ class TFCOrgMemberships(TFCEndpoint):
             - ``page`` (Optional)
             - ``page_size`` (Optional)
 
+        Query parameter details:
+            - https://www.terraform.io/docs/cloud/api/organization-memberships.html#query-parameters
+
         Example filter(s):
         ``
         filters = [

@@ -53,6 +53,9 @@ class TFCStateVersions(TFCEndpoint):
             - page (Optional)
             - page_size (Optional)
 
+        Query parameter details:
+            - https://www.terraform.io/docs/cloud/api/state-versions.html#query-parameters
+
         Example filter(s):
         ``
         filters = [

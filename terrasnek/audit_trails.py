@@ -27,6 +27,9 @@ class TFCAuditTrails(TFCEndpoint):
         Query parameters:
             - ``since`` (Optional)
             - ``page`` (Optional)
+
+        Query parameter details:
+            - https://www.terraform.io/docs/cloud/api/audit-trails.html#query-parameters
         """
         return self._list(self._audit_trail_api_v2_base_url, \
             page=page, since=since)

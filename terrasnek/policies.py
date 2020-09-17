@@ -35,11 +35,13 @@ class TFCPolicies(TFCEndpoint):
         """
         ``GET /organizations/:organization_name/policies``
 
-
         Query parameters:
             - ``page`` (Optional)
             - ``page_size`` (Optional)
             - ``search`` (Optional)
+
+        Query parameter details:
+            - https://www.terraform.io/docs/cloud/api/policies.html#query-parameters
         """
         return self._list(\
             self._org_api_v2_base_url, page=page, page_size=page_size, search=search)

@@ -31,6 +31,9 @@ class TFCVars(TFCEndpoint):
         # TODO: take the filters in the standard way here.
         Query parameters:
             - ``filter[workspace][name]`` (Required)
+
+        Query parameter details:
+            - https://www.terraform.io/docs/cloud/api/variables.html#query-parameters
         """
         url = f"{self._endpoint_base_url}?filter[organization][name]={self._org_name}"
 

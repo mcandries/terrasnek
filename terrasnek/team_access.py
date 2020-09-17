@@ -34,6 +34,9 @@ class TFCTeamAccess(TFCEndpoint):
         Query parameters:
             - ``filter[workspace][id]`` (Required)
 
+        Query parameter details:
+            - https://www.terraform.io/docs/cloud/api/team-access.html#query-parameters
+
         Example filter(s):
         ``
         filters = [
