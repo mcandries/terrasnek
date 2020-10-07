@@ -7,7 +7,6 @@ import os
 import timeout_decorator
 
 from .base import TestTFCBaseTestCase
-from terrasnek.exceptions import TFCDeprecatedWontFix
 from ._constants import TFE_MODULE_PROVIDER_TYPE, MAX_TEST_TIMEOUT
 
 class TestTFCRegistryModules(TestTFCBaseTestCase):
@@ -44,9 +43,9 @@ class TestTFCRegistryModules(TestTFCBaseTestCase):
             "data": {
                 "attributes": {
                     "vcs-repo": {
-                        "identifier": "dahlke/terraform-tfe-terrasnek-unittest-module",
+                        "identifier": "dahlke/terraform-tfe-terrasnek-unittest-3",
                         "oauth-token-id": self._oauth_token_id,
-                        "display_identifier": "dahlke/terraform-tfe-terrasnek-unittest-module"
+                        "display_identifier": "dahlke/terraform-tfe-terrasnek-unittest-3"
                     }
                 },
                 "type":"registry-modules"
@@ -59,24 +58,31 @@ class TestTFCRegistryModules(TestTFCBaseTestCase):
 
 
         # Test the listing of the modules, time out if it takes too long.
-        @timeout_decorator.timeout(MAX_TEST_TIMEOUT)
-        def listed_modules_timeout():
-            listed_modules_resp = self._api.registry_modules.list()
-            while not listed_modules_resp:
-                listed_modules_resp = self._api.registry_modules.list()
-                time.sleep(1)
-            return listed_modules_resp
-        listed_modules_resp = listed_modules_timeout()
-
-
         # List all the modules for this org, confirm we found the one we
         # published.
-        listed_modules = listed_modules_resp["modules"]
-        found_module = False
-        for module in listed_modules:
-            if module["name"] == published_module_name:
-                found_module = True
-                break
+        @timeout_decorator.timeout(MAX_TEST_TIMEOUT)
+        def found_module_in_listed_modules_timeout(name_to_check):
+            found_module = False
+            listed_modules_resp = self._api.registry_modules.list()
+            listed_modules = listed_modules_resp["modules"]
+
+            while True:
+                listed_modules_resp = self._api.registry_modules.list()
+                listed_modules = listed_modules_resp["modules"]
+
+                for module in listed_modules:
+                    if module["name"] == name_to_check:
+                        found_module = True
+                        break
+
+                if found_module:
+                    break
+
+                time.sleep(1)
+            return listed_modules, found_module
+
+        listed_modules, found_module = found_module_in_listed_modules_timeout(published_module_name)
+
         self.assertTrue(found_module)
 
         # Search for the module by name, confirm we got it back in the results.
@@ -94,7 +100,7 @@ class TestTFCRegistryModules(TestTFCBaseTestCase):
             self._api.registry_modules.list_versions(\
                 published_module_name, TFE_MODULE_PROVIDER_TYPE)
         self.assertIn("modules", listed_versions_resp)
-        listed_version = listed_modules_resp["modules"][0]["version"]
+        listed_version = listed_modules[0]["version"]
 
         # List the latest version for all providers, compare to the
         # published module version
@@ -102,7 +108,7 @@ class TestTFCRegistryModules(TestTFCBaseTestCase):
             self._api.registry_modules.list_versions(\
                 published_module_name, TFE_MODULE_PROVIDER_TYPE)
         latest_all_providers = listed_latest_version_all_providers["modules"][0]
-        self.assertEqual(listed_version, latest_all_providers["versions"][0]["version"])
+        self.assertEqual(listed_version, latest_all_providers["versions"][-1]["version"])
 
         # List the latest version for a specific provider, compare to the
         # published module version
@@ -110,7 +116,7 @@ class TestTFCRegistryModules(TestTFCBaseTestCase):
             self._api.registry_modules.list_versions(\
                 published_module_name, TFE_MODULE_PROVIDER_TYPE)
         latest_specific_provider = listed_latest_version_specific_provider["modules"][0]
-        self.assertEqual(listed_version, latest_specific_provider["versions"][0]["version"])
+        self.assertEqual(listed_version, latest_specific_provider["versions"][-1]["version"])
 
         # Download the source for a specific version of the module, confirm the file
         # was downloaded to the correct path (and then remove it).
@@ -141,14 +147,14 @@ class TestTFCRegistryModules(TestTFCBaseTestCase):
         latest_version_all_providers = \
             self._api.registry_modules.list_latest_version_all_providers(published_module_name)
         tfe_provider_data = latest_version_all_providers["modules"][0]
-        self.assertEqual(tfe_provider_data["version"], "0.0.1")
+        self.assertEqual(tfe_provider_data["version"], "0.0.2")
         self.assertEqual(tfe_provider_data["provider"], expected_provider)
 
         # Confirm the latest version for specific providers endpoint works as expected
         latest_version_tfe_provider = \
             self._api.registry_modules.list_latest_version_specific_provider(\
                 published_module_name, expected_provider)
-        self.assertEqual(latest_version_tfe_provider["version"], "0.0.1")
+        self.assertEqual(latest_version_tfe_provider["version"], "0.0.2")
         self.assertEqual(latest_version_tfe_provider["provider"], expected_provider)
 
         shown_module = \
